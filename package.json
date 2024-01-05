@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"@linear/sdk": "^13.0.0",
+		"csv-parse": "^5.5.3"
+	}
+}
