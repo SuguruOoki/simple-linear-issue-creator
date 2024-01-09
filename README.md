@@ -1,5 +1,7 @@
 ## General
 
+This is [Linear](https://linear.app/) 's bulk issue creation tool.
+
 1. Install [pnpm](https://pnpm.js.org/en/installation)
 2. Install dependencies and run the script
 3. Generate ApiKey from Linear Settings(Workspace Settings -> API -> Personal API tokens -> "Create Key" Button)
