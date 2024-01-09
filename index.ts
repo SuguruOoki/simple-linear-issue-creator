@@ -1,27 +1,8 @@
-import { LinearClient, LinearSdk, ProjectConnection, TeamConnection, UserConnection, } from "@linear/sdk";
+import { LinearClient } from "@linear/sdk";
 import * as fs from 'node:fs';
 import { parse } from 'csv-parse/sync';
-import { IssueCreateInput, ProjectCreateInput } from "@linear/sdk/dist/_generated_documents";
+import { IssueCreateInput } from "@linear/sdk/dist/_generated_documents";
 import { ArgumentParser } from "argparse"
-
-async function getProjects(linearClient: LinearClient): Promise<ProjectConnection> {
-  return await linearClient.projects();
-}
-
-async function getTeams(linearClient: LinearClient): Promise<TeamConnection> {
-  return await linearClient.teams();
-}
-
-async function getUsers(linearClient: LinearClient): Promise<UserConnection> {
-  return await linearClient.users();
-}
-
-async function test() {
-  const apiKey = fs.readFileSync('.api_key', 'utf8');
-  const linearClient = new LinearClient({ apiKey });
-  const teams = await getTeams(linearClient);
-  return teams.nodes.map(team => console.log(team.id +': '+team.name))
-}
 
 async function main() {
     const parser = new ArgumentParser({
