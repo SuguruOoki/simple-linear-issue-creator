@@ -12,7 +12,7 @@ async function main() {
   parser.add_argument('-m', '--mode', {help: "mode: createIssues | displayProjects | displayUsers", required: false, default: 'createIssues'})
   parser.add_argument('-f', '--filePath', {help: "csv file path | ./test.csv", required: false, default: './test.csv'})
   const args = parser.parse_args()
-  const mode: 'createIssues' | 'displayProjects' | 'displayUsers' = args.mode
+  const mode: 'createIssues' | 'displayProjects' | 'displayUsers' | 'displayTeams' = args.mode
   const apiKey = fs.readFileSync('.api_key', 'utf8');
   const linearClient = new LinearClient({ apiKey });
 
@@ -27,8 +27,21 @@ async function main() {
       displayProjects(linearClient)
     case 'displayUsers':
       displayUsers(linearClient)
+    case 'displayTeams':
+      displayTeams(linearClient)
     default:
       createIssues(linearClient, args.filePath)
+  }
+}
+
+async function displayTeams(linearClient: LinearClient) {
+  const teams = await linearClient.teams();
+  if (!teams) {
+    console.log('user not found');
+    return;
+  }
+  for (const team of teams.nodes) {
+    console.log(team.id +': '+ team.name)
   }
 }
 
