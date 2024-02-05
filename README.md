@@ -26,7 +26,13 @@ $ ./node_modules/.bin/ts-node index.ts -f <your csv file path>
 
 --mode or -m
 
-"mode" argument has 3 options: createIssues, displayProjects, displayUsers, displayTeams
+"mode" argument has 4 options
+
+1. createIssues
+2. displayProjects
+3. displayUsers
+4. displayTeams
+
 default: createIssues
 
 ```bash
