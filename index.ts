@@ -18,6 +18,10 @@ async function main() {
 
   switch (mode) {
     case 'createIssues':
+      if (!args.filePath){
+        console.error('-f|--filePath option is required when you use "createIssues" mode')
+        return;
+      }
       createIssues(linearClient, args.filePath)
     case 'displayProjects':
       displayProjects(linearClient)
