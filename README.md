@@ -21,3 +21,17 @@ $ ./node_modules/.bin/ts-node index.ts
 $ pnpm i
 $ ./node_modules/.bin/ts-node index.ts -f <your csv file path>
 ```
+
+### mode
+
+--mode or -m
+
+"mode" argument has 3 options: createIssues, displayProjects, displayUsers
+default: createIssues
+
+```bash
+$ ./node_modules/.bin/ts-node index.ts --mode displayProjects
+$ ./node_modules/.bin/ts-node index.ts -m displayProjects
+```
+
+if "mode" is "createIssues", you require -f option.
