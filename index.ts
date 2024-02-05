@@ -13,34 +13,32 @@ async function main() {
   parser.add_argument('-f', '--filePath', {help: "csv file path | ./test.csv", required: false, default: './test.csv'})
   const args = parser.parse_args()
   const mode: 'createIssues' | 'displayProjects' | 'displayUsers' = args.mode
+  const apiKey = fs.readFileSync('.api_key', 'utf8');
+  const linearClient = new LinearClient({ apiKey });
 
   switch (mode) {
     case 'createIssues':
-      createIssues(args.filePath)
+      createIssues(linearClient, args.filePath)
     case 'displayProjects':
-      displayProjects()
+      displayProjects(linearClient)
     case 'displayUsers':
-      displayUsers()
+      displayUsers(linearClient)
     default:
-      createIssues(args.filePath)
+      createIssues(linearClient, args.filePath)
   }
 }
 
-async function displayUsers() {
-  const apiKey = fs.readFileSync('.api_key', 'utf8');
-  const linearClient = new LinearClient({ apiKey });
-  const users =await linearClient.users();
+async function displayUsers(linearClient: LinearClient) {
+  const users = await linearClient.users();
   if (!users) {
-    console.log('users not found');
+    console.log('user not found');
     return;
   }
   for (const user of users.nodes) {
     console.log(user.id +': '+ user.name)
   }
 }
-async function displayProjects() {
-  const apiKey = fs.readFileSync('.api_key', 'utf8');
-  const linearClient = new LinearClient({ apiKey });
+async function displayProjects(linearClient: LinearClient) {
   const projects =await linearClient.projects();
   if (!projects) {
     console.log('project not found');
@@ -51,11 +49,9 @@ async function displayProjects() {
   }
 }
 
-function createIssues(filePath: string) {
-  const apiKey = fs.readFileSync('.api_key', 'utf8');
+function createIssues(linearClient: LinearClient, filePath: string) {
   const defaultTeamId = fs.readFileSync('.default_team_id', 'utf8');
   const defaultProjectId = fs.readFileSync('.default_project_id', 'utf8');
-  const linearClient = new LinearClient({ apiKey });
 
   if (defaultTeamId !== '') {
     const data = fs.readFileSync(filePath)
