@@ -9,11 +9,11 @@ async function main() {
     description: 'Command line tool to create issues in bulk with Linear.',
     add_help: true
   })
-  parser.add_argument('-m', '--mode', {help: "mode: createIssues | displayProjects | displayUsers", required: false, default: 'createIssues'})
-  parser.add_argument('-f', '--filePath', {help: "csv file path | ./test.csv", required: false, default: './test.csv'})
+  parser.add_argument('-m','--mode', {help: "mode: createIssues | displayProjects | displayUsers", required: false, default: 'createIssues'})
+  parser.add_argument('-f','--filePath', {help: "csv file path | ./test.csv", required: false, default: './test.csv'})
   const args = parser.parse_args()
   const mode: 'createIssues' | 'displayProjects' | 'displayUsers' | 'displayTeams' = args.mode
-  const apiKey = fs.readFileSync('.api_key', 'utf8');
+  const apiKey = fs.readFileSync('.api_key','utf8');
   const linearClient = new LinearClient({ apiKey });
 
   switch (mode) {
@@ -41,7 +41,7 @@ async function displayTeams(linearClient: LinearClient) {
     return;
   }
   for (const team of teams.nodes) {
-    console.log(team.id +': '+ team.name)
+    console.log(team.id +','+ team.name)
   }
 }
 
@@ -52,7 +52,7 @@ async function displayUsers(linearClient: LinearClient) {
     return;
   }
   for (const user of users.nodes) {
-    console.log(user.id +': '+ user.name)
+    console.log(user.id +','+ user.name)
   }
 }
 async function displayProjects(linearClient: LinearClient) {
@@ -62,13 +62,13 @@ async function displayProjects(linearClient: LinearClient) {
     return;
   }
   for (const project of projects.nodes) {
-    console.log((await project.teams()).nodes[0].name + ' | '+ project.id + ': ' + project.name)
+    console.log((await project.teams()).nodes[0].name + ','+ project.id + ',' + project.name)
   }
 }
 
 function createIssues(linearClient: LinearClient, filePath: string) {
-  const defaultTeamId = fs.readFileSync('.default_team_id', 'utf8');
-  const defaultProjectId = fs.readFileSync('.default_project_id', 'utf8');
+  const defaultTeamId = fs.readFileSync('.default_team_id','utf8');
+  const defaultProjectId = fs.readFileSync('.default_project_id','utf8');
 
   if (defaultTeamId !== '') {
     const data = fs.readFileSync(filePath)
