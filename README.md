@@ -8,14 +8,14 @@ This is [Linear](https://linear.app/) 's bulk issue creation tool.
 4. Add ApiKey to .api_key file
 5. if you want to use default team and project id, add them(uuid) to .default_team_id and .default_project_id files
 
-## use test.csv file
+## use test.csv file to create issues
 
 ```bash
 $ pnpm i
 $ ./node_modules/.bin/ts-node index.ts
 ```
 
-## use your original csv file
+## use your original csv file to create issues
 
 ```bash
 $ pnpm i
